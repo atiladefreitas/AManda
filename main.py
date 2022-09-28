@@ -1,5 +1,7 @@
 import discord
 from discord import app_commands
+import os
+from dotenv import load_dotenv
 
 server_id = discord.Object(id=1011390676409262140)
 
@@ -54,17 +56,13 @@ client = MeuClient(intents=discord.Intents.default())
 
 @client.event
 async def on_ready():
-    print("o bot está funcionando 🚀")
+    print("O bot está funcionando 🚀")
 
 
 @client.tree.command()
 async def ola(interaction: discord.Interaction):
     await interaction.response.send_message("Olá, tudo bem?")
 
-""" load_dotenv()
+load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 client.run(TOKEN)
- """
-
-client.run(
-    'MTAxNTY0MDU4Mzc0NzkzNjM4Ng.GHUbSg.LA_6Ip69-KXM_fLdwsmI47itVsYhXjGVLH9w9E')
