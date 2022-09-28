@@ -1,0 +1,4 @@
+.env
+__pycache__
+maintest.py
+test.py
