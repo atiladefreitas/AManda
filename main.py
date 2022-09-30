@@ -1,10 +1,13 @@
 import discord
 from discord import app_commands
+import json
 from dotenv import load_dotenv
 import os
-import json
 
 server_id = discord.Object(id=1011390676409262140)
+
+intents = discord.Intents.all()
+intents.members = True
 
 
 class MeuClient(discord.Client):
@@ -18,17 +21,33 @@ class MeuClient(discord.Client):
         await self.tree.sync(guild=server_id)
 
 
-client = MeuClient(intents=discord.Intents.default())
+client = MeuClient(intents=discord.Intents.all())
+
+# bot startup
 
 
 @client.event
 async def on_ready():
     print("O bot está funcionando 🚀")
 
+# mensagem de boas vindas
+
+
+@client.event
+async def on_member_join(member):
+    boasvindas = client.get_channel(1011626674611310623)
+    regras = client.get_channel(1011612420957020260)
+
+    mensagem = await boasvindas.send(f"Bem vindo {member.mention}! Leia as regras em {regras.mention}")
+
+    await asyncio.sleep(60)
+
+    await mensagem.delete()
+
 
 @client.tree.command()
-async def ola(interaction: discord.Interaction):
-    await interaction.response.send_message("de nada! careca")
+async def testetexto(interaction: discord.Interaction):
+    await interaction.response.send_message(" este é um texto normal \n ** este é um texto negrito ** \n *este é um texto italico * ")
 
 
 @client.tree.command()
@@ -62,6 +81,28 @@ async def desbanir(interaction: discord.Interaction, usuario: discord.Member, mo
         await interaction.response.send_message(f"O usuário {usuario} não pode ser desbanido, pois não tenho permissões.")
     else:
         await interaction.response.send_message("O usuário foi desbanido com sucesso.")
+
+
+@client.tree.command()
+async def embed(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="Hey, fique atento às regras do servidor!",
+        description="Descrição completa",
+        colour=14707394
+    )
+
+    embed.set_author(
+        name="AManda")
+    embed.set_footer(text="Agora é só aproveitar 😄")
+
+    embed.add_field(
+        name="Regra 1", value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been", inline=True)
+    embed.add_field(
+        name="Regra 2", value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been", inline=True)
+    embed.add_field(
+        name="Regra 3", value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been", inline=True)
+
+    await interaction.response.send_message(embed=embed)
 
 
 @client.tree.command()
@@ -185,11 +226,6 @@ class Menu(discord.ui.Select):
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.send_message(self.values, ephemeral=True)
-
-
-@client.tree.command()
-async def teste(interaction: discord.Interaction):
-    await interaction.response.send_message("Mensagem", view=View())
 
 
 load_dotenv()
