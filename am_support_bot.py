@@ -2,6 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
+import asyncio
 import os
 
 id_do_servidor = 1011390676409262140
@@ -94,6 +95,7 @@ tree = app_commands.CommandTree(aclient)
 
 
 @tree.command(guild=discord.Object(id=id_do_servidor), name='setup', description='Setup')
+@app_commands.default_permissions(manage_guild=True)
 @commands.has_permissions(manage_guild=True)
 async def setup(interaction: discord.Interaction):
     await interaction.response.send_message("Painel criado", ephemeral=True)
@@ -116,6 +118,7 @@ async def _fecharticket(interaction: discord.Interaction):
         await interaction.channel.edit(archived=True)
     else:
         await interaction.response.send_message("Isso não pode ser feito aqui...")
+
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_SUPORT_TOKEN")

@@ -1,6 +1,8 @@
 import discord
 from discord import app_commands
+from discord.ext import commands
 from dotenv import load_dotenv
+import asyncio
 import os
 
 server_id = discord.Object(id=1011390676409262140)
@@ -35,8 +37,11 @@ async def on_ready():
 async def on_member_join(member):
     boasvindas = client.get_channel(1011626674611310623)
     regras = client.get_channel(1011612420957020260)
+    cargo = member.guild.get_role(1028364839904616468)
 
     mensagem = await boasvindas.send(f"Bem vindo {member.mention}! Leia as regras em {regras.mention}")
+
+    await member.add_roles(cargo)
 
     await asyncio.sleep(60)
 
@@ -77,6 +82,7 @@ async def desbanir(interaction: discord.Interaction, usuario: discord.Member, mo
 
 
 @client.tree.command()
+@app_commands.default_permissions(manage_guild=True)
 async def embed_regras(interaction: discord.Interaction):
     embed = discord.Embed(
         title="Fique atento às regras do servidor!",
@@ -107,6 +113,11 @@ async def embed_regras(interaction: discord.Interaction):
 async def limparchat(interaction: discord.Interaction, quantidade: int):
     await interaction.channel.purge(limit=quantidade)
 
+
+@client.tree.command()
+@commands.has_role(1028373517516931113)
+async def pomo_message(interaction: discord.Interaction):
+    await interaction.response.send_message("Olá! Neste canal você poderá acompanhar o seu tempo de estudo e de descanso.\nNão se preocupe, você será avisado(a) quando um desses tempos terminar 😄 ")
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
