@@ -1,6 +1,5 @@
 import discord
 from discord import app_commands
-import json
 from dotenv import load_dotenv
 import os
 
@@ -107,33 +106,6 @@ async def embed_regras(interaction: discord.Interaction):
 @app_commands.default_permissions(manage_messages=True)
 async def limparchat(interaction: discord.Interaction, quantidade: int):
     await interaction.channel.purge(limit=quantidade)
-
-# Reclame aqui
-# Criar ticket
-
-
-@client.tree.command()
-async def criarticket(interaction: discord.Interaction):
-    suporte = interaction.guild.get_role(1011436517790580777)
-    categoria = interaction.guild.get_channel(1015067862500655217)
-
-    overwrites = {
-        interaction.guild.default_role: discord.PermissionOverwrite(read_messages=False),
-        interaction.guild.me: discord.PermissionOverwrite(read_messages=True),
-        suporte: discord.PermissionOverwrite(read_messages=True),
-        interaction.user: discord.PermissionOverwrite(read_messages=True)
-    }
-
-    canal = await interaction.guild.create_text_channel(f"ticket-{interaction.user.name}", overwrites=overwrites, category=categoria)
-    await interaction.response.send_message(f"O atendimento foi criado em {canal.mention}", ephemeral=True)
-    await canal.send(f"olá, {interaction.user.mention} você abriu um atendimento! Em breve você será atendido")
-
-# Apagar ticket
-
-
-@client.tree.command()
-async def apagarticket(interaction: discord.Interaction):
-    await interaction.channel.delete()
 
 
 load_dotenv()

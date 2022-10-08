@@ -118,5 +118,5 @@ async def _fecharticket(interaction: discord.Interaction):
         await interaction.response.send_message("Isso não pode ser feito aqui...")
 
 load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.getenv("DISCORD_SUPORT_TOKEN")
 aclient.run(TOKEN)
