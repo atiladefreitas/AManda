@@ -93,7 +93,8 @@ async def embed_regras(interaction: discord.Interaction):
     embed.set_author(
         name="AMentoria", icon_url="https://i.imgur.com/9FK4CDT.png")
 
-    embed.set_footer(text="Agora é só aproveitar 😄")
+    embed.set_footer(
+        text="As regras estão sujeitas à alteração da moderação")
 
     embed.set_image(url="https://i.imgur.com/hLstMzb.png")
 
@@ -103,7 +104,7 @@ async def embed_regras(interaction: discord.Interaction):
     embed.add_field(
         name="2️⃣  **Spam**", value="É proibido spam, flood, correntes, ou qualquer tipo de atividade que atrapalhe o fluxo correto dos canais de interação; \n", inline=False)
     embed.add_field(
-        name="Regra 3", value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been", inline=False)
+        name="3️⃣ **É proibida a discussão de assuntos sensíveis**", value="incluindo mas não limitado a: política, religião, orientação sexual, etc.", inline=False)
 
     await interaction.response.send_message(embed=embed)
 
