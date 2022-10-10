@@ -1,0 +1,1 @@
+worker: python3 amanda_hostess_bot.py
